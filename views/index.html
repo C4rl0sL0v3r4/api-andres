@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Product</h2>
+    <br>
+    <form action="" id="boton_form">
+
+        <input id="title" type="text" name="titulo">
+        <label for="title"></label> <br>
+
+        <input id="body_html" type="text" name="descripcion"></input>
+        <label for="body_html"></label> <br>
+
+        <input id="vendor" type="text" name="vendor"></input>
+        <label for="vendor"></label> <br>
+
+        <input id="product_type" type="text" name="tipo_producto"></input>
+        <label for="product_type"></label> <br>
+
+        <input id="tags" type="text" name="categoria"></input>
+        <label for="tags"></label> <br>
+
+        <button type="submit">Enviar</button>
+
+    </form>
+
+    <script>
+        const form = document.getElementById('boton_form')
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            let formData = new FormData();
+            const inputs = document.getElementsByTagName('input');
+            let noFilled = 0;
+            for (const input of inputs) {
+                console.log(input.value)
+                if (input.value) {
+                    formData.append(input.name, input.value);
+                } else {
+                    noFilled++
+                }
+            }
+            if (noFilled == 0) {
+                fetch("/productadd", {
+                    method: 'post',
+                    body: formData,
+                })
+                .then((response) => response.json())
+                .then((data) => { console.log(data)})
+                console.log(formData.values())
+            }
+        })
+    </script>
+
+</body>
+
+</html>
